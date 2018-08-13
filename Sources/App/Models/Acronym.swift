@@ -29,3 +29,6 @@ extension Acronym: Model {
 
 // Equivalent to the above block of commented-out code
 extension Acronym: SQLiteModel {}
+
+// Conform to Migration to allow simple database migrations
+extension Acronym: Migration {}

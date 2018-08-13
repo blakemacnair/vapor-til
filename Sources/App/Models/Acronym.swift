@@ -13,6 +13,7 @@ final class Acronym: Codable {
     }
 }
 
+/*
 // Conform to Fluent's Model
 extension Acronym: Model {
     // The type of DB to use for this model
@@ -24,3 +25,7 @@ extension Acronym: Model {
     // The key path of the model's ID property
     static var idKey: IDKey = \Acronym.id
 }
+ */
+
+// Equivalent to the above block of commented-out code
+extension Acronym: SQLiteModel {}

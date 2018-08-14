@@ -32,3 +32,6 @@ extension Acronym: SQLiteModel {}
 
 // Conform to Migration to allow simple database migrations
 extension Acronym: Migration {}
+
+// Conform to Content - a wrapper around Codable - to allow converting models between various formats
+extension Acronym: Content {}

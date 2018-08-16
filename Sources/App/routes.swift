@@ -1,4 +1,5 @@
 import Vapor
+import Fluent
 
 /// Register your application's routes here.
 public func routes(_ router: Router) throws {
@@ -23,6 +24,18 @@ public func routes(_ router: Router) throws {
     // GET a single Acronym by id
     router.get("api", "acronyms", Acronym.parameter) { req -> Future<Acronym> in
         return try req.parameters.next(Acronym.self)
+    }
+
+    // GET a list of acronyms by search parameter
+    router.get("api", "acronyms", "search") { req -> Future<[Acronym]> in
+        guard let searchTerm = req.query[String.self, at: "term"] else {
+            throw Abort(.badRequest)
+        }
+
+        return Acronym.query(on: req).group(.or) { or in
+                or.filter(\.short == searchTerm)
+                or.filter(\.long == searchTerm)
+            }.all()
     }
 
     // PUT update a single acronym

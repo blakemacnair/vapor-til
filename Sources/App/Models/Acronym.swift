@@ -35,3 +35,6 @@ extension Acronym: Migration {}
 
 // Conform to Content - a wrapper around Codable - to allow converting models between various formats
 extension Acronym: Content {}
+
+// Conform to Parameter to enable acting as a dynamic route, ex: GET a single Acronym by id
+extension Acronym: Parameter {}

@@ -14,4 +14,9 @@ public func routes(_ router: Router) throws {
                 return acronym.save(on: req)
         }
     }
+
+    // GET all Acronyms
+    router.get("api", "acronyms") { req -> Future<[Acronym]> in
+        return Acronym.query(on: req).all()
+    }
 }

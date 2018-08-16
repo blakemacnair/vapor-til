@@ -1,5 +1,5 @@
 import Vapor
-import FluentMySQL
+import FluentPostgreSQL
 
 // All Fluent models must conform to Codable
 final class Acronym: Codable {
@@ -28,7 +28,7 @@ extension Acronym: Model {
  */
 
 // Equivalent to the above block of commented-out code
-extension Acronym: MySQLModel {}
+extension Acronym: PostgreSQLModel {}
 
 // Conform to Migration to allow simple database migrations
 extension Acronym: Migration {}

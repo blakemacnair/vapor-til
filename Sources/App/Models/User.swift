@@ -12,3 +12,8 @@ final class User: Codable {
         self.username = username
     }
 }
+
+extension User: PostgreSQLUUIDModel {}
+extension User: Content {}
+extension User: Migration {}
+extension User: Parameter {}

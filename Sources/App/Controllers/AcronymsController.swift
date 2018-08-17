@@ -36,6 +36,7 @@ struct AcronymsController: RouteCollection {
             }.all()
     }
 
+    // GET the first listed Acronym by id
     func getFirstHandler(_ req: Request) throws -> Future<Acronym> {
         // TODO: Make this searchable
         return Acronym.query(on: req)

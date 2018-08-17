@@ -15,6 +15,8 @@ struct AcronymsController: RouteCollection {
         acronymsRoutes.post(use: postHandler)
 
         acronymsRoutes.put(Acronym.parameter, use: putHandler)
+
+        acronymsRoutes.delete(Acronym.parameter, use: putHandler)
     }
 
     // GET a list of all acronyms
@@ -79,5 +81,12 @@ struct AcronymsController: RouteCollection {
 
                             return acronym.save(on: req)
         }
+    }
+
+    // DELETE a single acronym by id
+    func deleteHandler(_ req: Request) throws -> Future<HTTPStatus> {
+        return try req.parameters.next(Acronym.self)
+            .delete(on: req)
+            .transform(to: HTTPStatus.noContent)
     }
 }

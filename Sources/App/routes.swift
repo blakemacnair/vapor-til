@@ -6,4 +6,8 @@ public func routes(_ router: Router) throws {
     // Register Acronyms Controller and its routes
     let acronymsController = AcronymsController()
     try router.register(collection: acronymsController)
+
+    // Register Users Controller
+    let usersController = UsersController()
+    try router.register(collection: usersController)
 }

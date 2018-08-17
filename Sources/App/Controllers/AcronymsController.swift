@@ -9,6 +9,7 @@ struct AcronymsController: RouteCollection {
         acronymsRoutes.get(use: getAllHandler)
         acronymsRoutes.get(Acronym.parameter, use: getSingleHandler)
         acronymsRoutes.get("search", use: getSearchHandler)
+        acronymsRoutes.get("first", use: getFirstHandler)
 
         acronymsRoutes.post(use: postHandler)
     }
@@ -33,6 +34,19 @@ struct AcronymsController: RouteCollection {
             or.filter(\.short == searchTerm)
             or.filter(\.long == searchTerm)
             }.all()
+    }
+
+    func getFirstHandler(_ req: Request) throws -> Future<Acronym> {
+        // TODO: Make this searchable
+        return Acronym.query(on: req)
+            .first()
+            .map(to: Acronym.self, { acronym -> Acronym in
+                guard let acronym = acronym else {
+                    throw Abort(.notFound)
+                }
+
+                return acronym
+            })
     }
 
     // POST new Acronym

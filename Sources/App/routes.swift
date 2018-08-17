@@ -8,20 +8,6 @@ public func routes(_ router: Router) throws {
         return "Hello, world!"
     }
 
-    // GET the first result from a search parameter
-    router.get("api", "acronyms", "first") { req -> Future<Acronym> in
-        // TODO: Make this searchable
-        return Acronym.query(on: req)
-            .first()
-            .map(to: Acronym.self, { acronym -> Acronym in
-                guard let acronym = acronym else {
-                    throw Abort(.notFound)
-                }
-
-                return acronym
-        })
-    }
-
     // GET a sorted list of Acronyms
     router.get("api", "acronyms", "sorted") { req -> Future<[Acronym]> in
         // TODO: Change this by making "sorted" a query parameter and fold this into the base GET request

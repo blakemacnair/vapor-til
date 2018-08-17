@@ -73,4 +73,7 @@ public func routes(_ router: Router) throws {
             .delete(on: req)
             .transform(to: HTTPStatus.noContent)
     }
+
+    let acronymsController = AcronymsController()
+    try router.register(collection: acronymsController)
 }

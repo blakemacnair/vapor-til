@@ -7,6 +7,10 @@ struct AcronymsController: RouteCollection {
         let acronymsRoutes = router.grouped("api", "acronyms")
 
         acronymsRoutes.get(use: getAllHandler)
+
+        acronymsRoutes.get(Acronym.parameter, use: getSingleHandler)
+
+        acronymsRoutes.post(use: postHandler)
     }
 
     // GET a list of all acronyms

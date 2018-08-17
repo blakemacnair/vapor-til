@@ -7,8 +7,8 @@ struct AcronymsController: RouteCollection {
         let acronymsRoutes = router.grouped("api", "acronyms")
 
         acronymsRoutes.get(use: getAllHandler)
-
         acronymsRoutes.get(Acronym.parameter, use: getSingleHandler)
+        acronymsRoutes.get("search", use: getSearchHandler)
 
         acronymsRoutes.post(use: postHandler)
     }
@@ -21,6 +21,18 @@ struct AcronymsController: RouteCollection {
     // GET a single Acronym by id
     func getSingleHandler(_ req: Request) throws -> Future<Acronym> {
         return try req.parameters.next(Acronym.self)
+    }
+
+    // GET a list of Acronyms by search parameter
+    func getSearchHandler(_ req: Request) throws -> Future<[Acronym]> {
+        guard let searchTerm = req.query[String.self, at: "term"] else {
+            throw Abort(.badRequest)
+        }
+
+        return Acronym.query(on: req).group(.or) { or in
+            or.filter(\.short == searchTerm)
+            or.filter(\.long == searchTerm)
+            }.all()
     }
 
     // POST new Acronym

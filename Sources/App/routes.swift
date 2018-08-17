@@ -8,18 +8,6 @@ public func routes(_ router: Router) throws {
         return "Hello, world!"
     }
 
-    // GET a list of acronyms by search parameter
-    router.get("api", "acronyms", "search") { req -> Future<[Acronym]> in
-        guard let searchTerm = req.query[String.self, at: "term"] else {
-            throw Abort(.badRequest)
-        }
-
-        return Acronym.query(on: req).group(.or) { or in
-                or.filter(\.short == searchTerm)
-                or.filter(\.long == searchTerm)
-            }.all()
-    }
-
     // GET the first result from a search parameter
     router.get("api", "acronyms", "first") { req -> Future<Acronym> in
         // TODO: Make this searchable

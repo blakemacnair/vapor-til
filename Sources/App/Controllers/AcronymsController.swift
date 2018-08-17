@@ -12,7 +12,7 @@ struct AcronymsController: RouteCollection {
         acronymsRoutes.get("first", use: getFirstHandler)
         acronymsRoutes.get("sorted", use: getSortedHandler)
 
-        acronymsRoutes.post(use: postHandler)
+        acronymsRoutes.post(Acronym.self, use: postHandler)
 
         acronymsRoutes.put(Acronym.parameter, use: putHandler)
 
@@ -64,11 +64,8 @@ struct AcronymsController: RouteCollection {
     }
 
     // POST new Acronym
-    func postHandler(_ req: Request) throws -> Future<Acronym> {
-        return try req.content.decode(Acronym.self)
-            .flatMap(to: Acronym.self) { acronym in
-                return acronym.save(on: req)
-        }
+    func postHandler(_ req: Request, acronym: Acronym) throws -> Future<Acronym> {
+        return acronym.save(on: req)
     }
 
     // PUT update a single acronym

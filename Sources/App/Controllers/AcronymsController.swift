@@ -14,6 +14,11 @@ struct AcronymsController: RouteCollection {
         return Acronym.query(on: req).all()
     }
 
+    // GET a single Acronym by id
+    func getSingleHandler(_ req: Request) throws -> Future<Acronym> {
+        return try req.parameters.next(Acronym.self)
+    }
+
     // POST new Acronym
     func postHandler(_ req: Request) throws -> Future<Acronym> {
         return try req.content.decode(Acronym.self)

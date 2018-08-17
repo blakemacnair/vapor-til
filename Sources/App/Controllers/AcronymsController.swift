@@ -13,4 +13,12 @@ struct AcronymsController: RouteCollection {
     func getAllHandler(_ req: Request) throws -> Future<[Acronym]> {
         return Acronym.query(on: req).all()
     }
+
+    // POST new Acronym
+    func postHandler(_ req: Request) throws -> Future<Acronym> {
+        return try req.content.decode(Acronym.self)
+            .flatMap(to: Acronym.self) { acronym in
+                return acronym.save(on: req)
+        }
+    }
 }

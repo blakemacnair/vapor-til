@@ -8,14 +8,6 @@ public func routes(_ router: Router) throws {
         return "Hello, world!"
     }
 
-    // GET a sorted list of Acronyms
-    router.get("api", "acronyms", "sorted") { req -> Future<[Acronym]> in
-        // TODO: Change this by making "sorted" a query parameter and fold this into the base GET request
-        return Acronym.query(on: req)
-            .sort(\.short, .ascending)
-            .all()
-    }
-
     // PUT update a single acronym
     router.put("api", "acronyms", Acronym.parameter) { req -> Future<Acronym> in
         return try flatMap(to: Acronym.self,

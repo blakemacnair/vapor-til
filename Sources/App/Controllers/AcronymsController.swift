@@ -10,6 +10,7 @@ struct AcronymsController: RouteCollection {
         acronymsRoutes.get(Acronym.parameter, use: getSingleHandler)
         acronymsRoutes.get("search", use: getSearchHandler)
         acronymsRoutes.get("first", use: getFirstHandler)
+        acronymsRoutes.get("sorted", use: getSortedHandler)
 
         acronymsRoutes.post(use: postHandler)
     }
@@ -48,6 +49,14 @@ struct AcronymsController: RouteCollection {
 
                 return acronym
             })
+    }
+
+    // GET a sorted list of Acronyms
+    func getSortedHandler(_ req: Request) throws -> Future<[Acronym]> {
+        // TODO: Change this by making "sorted" a query parameter and fold this into the base GET request
+        return Acronym.query(on: req)
+            .sort(\.short, .ascending)
+            .all()
     }
 
     // POST new Acronym
